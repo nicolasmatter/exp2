@@ -14,21 +14,24 @@ public class main : MonoBehaviour {
 	public Material p_Material;
 	private int activeMaterialSet;
 
+	public Vector3 newPos;
 
 	// Update is called once per frame
 	void Update () 
 	{
+		var mousePos = Input.mousePosition;
+		mousePos.z = 10; // select distance = 10 units from the camera
+		newPos = m_Camera.ScreenToWorldPoint (mousePos);
+
 		if (Input.GetMouseButton (0))
 		{
-			var mousePos = Input.mousePosition;
-			mousePos.z = 10; // select distance = 10 units from the camera
-			Vector3 newPos = m_Camera.ScreenToWorldPoint (mousePos);
-			GameObject newHouse = Instantiate (m_house,newPos, Quaternion.identity);
-			if(!Input.GetKey (KeyCode.LeftShift))
+			GameObject newHouse = Instantiate (m_house, newPos, Quaternion.identity);
+			if (!Input.GetKey (KeyCode.LeftShift))
 			{
-			AddHouse (newHouse.GetComponent<houses> ());
+				AddHouse (newHouse.GetComponent<houses> ());
 			}
 			objectCount++;
+
 		}
 
 		if (Input.GetKeyUp (KeyCode.R))
