@@ -58,12 +58,14 @@ public class cameraScript : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.W))
 		{
+			q_reset = false;
 			q = Mathf.Clamp (q + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.left,q);
 		}	
 
 		if (Input.GetKey (KeyCode.S))
 		{
+			q_reset = false;
 			q = Mathf.Clamp (q + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.right,q);
 		}	
