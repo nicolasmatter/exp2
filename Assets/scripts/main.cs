@@ -20,6 +20,9 @@ public class main : MonoBehaviour {
 	private bool isBuildingRandom;
 
 	// Update is called once per frame
+	//
+
+
 	void Update () 
 	{
 		var mousePos = Input.mousePosition;
