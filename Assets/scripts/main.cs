@@ -42,11 +42,11 @@ public class main : MonoBehaviour {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 
-		if (Input.GetKeyDown (KeyCode.Period))
+		if (Input.GetKey (KeyCode.Period))
 		{
 			randomPositionCount++;
 		}
-		if (Input.GetKeyDown (KeyCode.Comma) && randomPositionCount > 0)
+		if (Input.GetKey (KeyCode.Comma) && randomPositionCount > 0)
 		{
 			randomPositionCount--;
 		}
@@ -74,6 +74,14 @@ public class main : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Keypad8))
 		{
 			randomPositionsRange.z++;
+		}
+		if (Input.GetKey (KeyCode.KeypadMinus) && rbcTarget > 100)
+		{
+			rbcTarget -= 20;
+		}
+		if (Input.GetKey (KeyCode.KeypadPlus))
+		{
+			rbcTarget += 20;
 		}
 
 		if (Input.GetKeyDown (KeyCode.P))
@@ -156,7 +164,7 @@ public class main : MonoBehaviour {
 	{
 		var TextStyle = new GUIStyle ();
 		TextStyle.normal.textColor = Color.black;
-		GUI.Label (new Rect (5,5,200,80), "count: "+objectCount.ToString()+
+		GUI.Label (new Rect (5,5,200,80), "count: "+objectCount.ToString()+"/"+rbcTarget.ToString ()+
 			"\nmultiples: "+randomPositionCount.ToString()+
 			"\nRangeVector:"+randomPositionsRange.x.ToString ()+" "+randomPositionsRange.y.ToString ()+" "+randomPositionsRange.z.ToString ()+
 			"\nlm - add points\nw/a/s/d/mousewheel - camera " +
@@ -166,6 +174,13 @@ public class main : MonoBehaviour {
 //		{
 //			Debug.Log ("Random Positions");
 //		}
+		if (!isBuildingRandom)
+		{
+			GUI.Label (new Rect(Screen.width/2f-100f,Screen.height/2f-40f,200,80),"press p to start" +
+				"\ncomma/period - change position count"+
+				"\nnumpad1/2/4/5/7/8 - change size"+
+				"\nnumpadplus/minus - change count",TextStyle);
+		}
 	}
 
 	public void AddHouse(houses h)
