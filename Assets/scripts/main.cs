@@ -15,6 +15,9 @@ public class main : MonoBehaviour {
 	private int activeMaterialSet;
 
 	public Vector3 newPos;
+	private int randomBuildCounter;
+	public int rbcTarget;
+	private bool isBuildingRandom;
 
 	// Update is called once per frame
 	void Update () 
@@ -25,18 +28,25 @@ public class main : MonoBehaviour {
 
 		if (Input.GetMouseButton (0))
 		{
-			GameObject newHouse = Instantiate (m_house, newPos, Quaternion.identity);
-			if (!Input.GetKey (KeyCode.LeftShift))
-			{
-				AddHouse (newHouse.GetComponent<houses> ());
-			}
-			objectCount++;
-
+			SpawnHouse (newPos);
 		}
 
 		if (Input.GetKeyUp (KeyCode.R))
 		{
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+		}
+
+		if (Input.GetKeyDown (KeyCode.P))
+		{
+			if (isBuildingRandom)
+			{
+				Debug.Log ("Just once");
+			}
+			else
+			{
+				isBuildingRandom = true;
+				StartCoroutine (BuildRandomly ());
+			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.F))
@@ -65,11 +75,40 @@ public class main : MonoBehaviour {
 		}
 	}
 
+	private void SpawnHouse(Vector3 position)
+	{
+		GameObject newHouse = Instantiate (m_house, position, Quaternion.identity);
+		if (!Input.GetKey (KeyCode.LeftShift))
+		{
+			AddHouse (newHouse.GetComponent<houses> ());
+		}
+		objectCount++;
+	}
+
+	private IEnumerator BuildRandomly()
+	{
+		yield return new WaitForSeconds (0.01f);
+		if (randomBuildCounter < rbcTarget)
+		{
+			randomBuildCounter++;
+			SpawnHouse (new Vector3(Random.Range (-10,10),Random.Range (-10,10),Random.Range (-10,10)));
+			StartCoroutine (BuildRandomly ());
+		}
+		else
+		{
+			Debug.Log ("Done");
+		}
+	}
+
 	void OnGUI()
 	{
 		var TextStyle = new GUIStyle ();
 		TextStyle.normal.textColor = Color.black;
 		GUI.Label (new Rect (5,5,200,80), "count: "+objectCount.ToString()+"\nlm - add points\nw/a/s/d/mousewheel - camera \nf - lights\nr - reset",TextStyle);  
+//		if (GUI.Button (new Rect (5, 90, 120, 20), "Random Positions"))
+//		{
+//			Debug.Log ("Random Positions");
+//		}
 	}
 
 	public void AddHouse(houses h)
