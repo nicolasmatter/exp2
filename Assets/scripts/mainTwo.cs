@@ -3,40 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class main : MonoBehaviour {
+public class mainTwo : MonoBehaviour {
 
-	public GameObject m_house;
+	// This script is for random generated structures only
+	// no mouse input to create
+	// all points will be spawned on this mainScript
+
+	public mainTwo m_main;
+	public GameObject m_carrier;
 	public int objectCount;
 	public Camera m_Camera;
-	public List<houses> allHouses;
 
-	public Material h_Material;
+	//Material Change
+//	public Material h_Material;
 	public Material p_Material;
 	private int activeMaterialSet;
 
+	//Random Creation
 	public Vector3 newPos;
 	private int randomBuildCounter;
 	public int rbcTarget;
 	private bool isBuildingRandom;
 	public int randomPositionCount;
-	private List<Vector3> randomPositions = new List<Vector3>();
+	public List<Vector3> randomPositions = new List<Vector3>();
 	public Vector3 randomPositionsRange;
 
 	//Pause function
 	public bool isPaused;
 
-
+	void Start()
+	{
+		if (m_main == null)
+		{
+			m_main = this.gameObject.GetComponent<mainTwo> ();
+		}
+	}
 
 	void Update () 
 	{
-		var mousePos = Input.mousePosition;
-		mousePos.z = 10; // select distance = 10 units from the camera
-		newPos = m_Camera.ScreenToWorldPoint (mousePos);
-
-		if (Input.GetMouseButton (0))
-		{
-			SpawnHouse (newPos);
-		}
 
 		if (Input.GetKeyUp (KeyCode.R))
 		{
@@ -52,35 +56,35 @@ public class main : MonoBehaviour {
 			randomPositionCount--;
 		}
 
-		if (Input.GetKey (KeyCode.Keypad1) && randomPositionsRange.x > 1)
+		if (Input.GetKey (KeyCode.Alpha1) && randomPositionsRange.x > 1)
 		{
 			randomPositionsRange.x--;
 		}
-		if (Input.GetKey (KeyCode.Keypad2))
+		if (Input.GetKey (KeyCode.Alpha2))
 		{
 			randomPositionsRange.x++;
 		}
-		if (Input.GetKey (KeyCode.Keypad4) && randomPositionsRange.y > 1)
+		if (Input.GetKey (KeyCode.Alpha3) && randomPositionsRange.y > 1)
 		{
 			randomPositionsRange.y--;
 		}
-		if (Input.GetKey (KeyCode.Keypad5))
+		if (Input.GetKey (KeyCode.Alpha4))
 		{
 			randomPositionsRange.y++;
 		}
-		if (Input.GetKey (KeyCode.Keypad7) && randomPositionsRange.z > 1)
+		if (Input.GetKey (KeyCode.Alpha5) && randomPositionsRange.z > 1)
 		{
 			randomPositionsRange.z--;
 		}
-		if (Input.GetKey (KeyCode.Keypad8))
+		if (Input.GetKey (KeyCode.Alpha6))
 		{
 			randomPositionsRange.z++;
 		}
-		if (Input.GetKey (KeyCode.KeypadMinus) && rbcTarget > 100)
+		if (Input.GetKey (KeyCode.Alpha7) && rbcTarget > 100)
 		{
 			rbcTarget -= 20;
 		}
-		if (Input.GetKey (KeyCode.KeypadPlus))
+		if (Input.GetKey (KeyCode.Alpha8))
 		{
 			rbcTarget += 20;
 		}
@@ -116,17 +120,14 @@ public class main : MonoBehaviour {
 			switch (activeMaterialSet)
 			{
 			case 0:
-				h_Material.color = Color.gray;
 				p_Material.color = Color.gray;
 				m_Camera.backgroundColor = Color.white;
 				break;
 			case 1:
-				h_Material.color = Color.white;
 				p_Material.color = Color.white;
 				m_Camera.backgroundColor = Color.black;
 				break;
 			case 2:
-				h_Material.color = Color.black;
 				p_Material.color = Color.black;
 				m_Camera.backgroundColor = Color.gray;
 				activeMaterialSet = -1;
@@ -148,15 +149,7 @@ public class main : MonoBehaviour {
 		}
 	}
 
-	private void SpawnHouse(Vector3 position)
-	{
-		GameObject newHouse = Instantiate (m_house, position, Quaternion.identity);
-		if (!Input.GetKey (KeyCode.LeftShift))
-		{
-			AddHouse (newHouse.GetComponent<houses> ());
-		}
-		objectCount++;
-	}
+
 
 	private IEnumerator BuildRandomly()
 	{
@@ -164,7 +157,11 @@ public class main : MonoBehaviour {
 		if (randomBuildCounter < rbcTarget)
 		{
 			randomBuildCounter++;
-			SpawnHouse (randomPositions[Random.Range (0,randomPositions.Count)]);
+			GameObject spawn = Instantiate (m_carrier, transform.position, Quaternion.identity, gameObject.transform);
+			Vector3 position = randomPositions [Random.Range (0, randomPositions.Count)];
+			carrierTwo c_Two = spawn.GetComponent<carrierTwo> ();
+			c_Two.Setup (position,m_main);
+			objectCount++;
 			StartCoroutine (BuildRandomly ());
 		}
 		else
@@ -178,26 +175,18 @@ public class main : MonoBehaviour {
 		var TextStyle = new GUIStyle ();
 		TextStyle.normal.textColor = Color.black;
 		GUI.Label (new Rect (5,5,200,80), "count: "+objectCount.ToString()+"/"+rbcTarget.ToString ()+
-			"\targets: "+randomPositionCount.ToString()+
+			"\ntargets: "+randomPositionCount.ToString()+
 			"\nRangeVector:"+randomPositionsRange.x.ToString ()+" "+randomPositionsRange.y.ToString ()+" "+randomPositionsRange.z.ToString ()+
 			"\nlm - add points\nw/a/s/d/mousewheel - camera " +
 			"\nf - lights" +
 			"\nr - reset",TextStyle);  
-//		if (GUI.Button (new Rect (5, 90, 120, 20), "Random Positions"))
-//		{
-//			Debug.Log ("Random Positions");
-//		}
 		if (!isBuildingRandom)
 		{
 			GUI.Label (new Rect(Screen.width/2f-100f,Screen.height/2f-40f,200,80),"press p to start" +
 				"\ncomma/period - change position count"+
-				"\nnumpad1/2/4/5/7/8 - change size"+
-				"\nnumpadplus/minus - change count",TextStyle);
+				"\n1/2/3/4/5/6 - change size"+
+				"\n7/8 - change count",TextStyle);
 		}
 	}
 
-	public void AddHouse(houses h)
-	{
-		allHouses.Add (h);
-	}
 }
