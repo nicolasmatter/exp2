@@ -22,6 +22,9 @@ public class main : MonoBehaviour {
 	private List<Vector3> randomPositions = new List<Vector3>();
 	public Vector3 randomPositionsRange;
 
+	//Pause function
+	public bool isPaused;
+
 	// Update is called once per frame
 	//
 
@@ -131,6 +134,18 @@ public class main : MonoBehaviour {
 				activeMaterialSet = -1;
 				break;
 
+			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.T))
+		{
+			if (isPaused)
+			{
+				isPaused = false;
+			}
+			else
+			{
+				isPaused = true;
 			}
 		}
 	}

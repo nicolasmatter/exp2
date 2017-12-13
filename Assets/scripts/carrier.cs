@@ -24,39 +24,42 @@ public class carrier : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		if (!lookingForAlternate)
+		if (!m_main.isPaused)
 		{
-			transform.position = Vector3.MoveTowards (transform.position, m_target, m_speed);
-
-			if (transform.position == m_target)
+			if (!lookingForAlternate)
 			{
-				transform.position = m_home.transform.position;
-				m_target = m_main.allHouses [Random.Range (0, m_main.allHouses.Count)].gameObject.transform.position;
-			}
-		}
-		else
-		{
-			transform.position = Vector3.MoveTowards (transform.position, alternateTarget, m_speed);
+				transform.position = Vector3.MoveTowards (transform.position, m_target, m_speed);
 
-			if (transform.position == alternateTarget)
-			{
-				transform.position = m_home.transform.position;
-				m_target = m_main.allHouses [Random.Range (0, m_main.allHouses.Count)].gameObject.transform.position;
-			}
-		}
-
-		if (Input.GetMouseButtonDown (1))
-		{
-			if (lookingForAlternate)
-			{
-				lookingForAlternate = false;
-				m_speed /= 2;
+				if (transform.position == m_target)
+				{
+					transform.position = m_home.transform.position;
+					m_target = m_main.allHouses [Random.Range (0, m_main.allHouses.Count)].gameObject.transform.position;
+				}
 			}
 			else
-			{	
-				alternateTarget = m_main.newPos;
-				lookingForAlternate = true;
-				m_speed *= 2;
+			{
+				transform.position = Vector3.MoveTowards (transform.position, alternateTarget, m_speed);
+
+				if (transform.position == alternateTarget)
+				{
+					transform.position = m_home.transform.position;
+					m_target = m_main.allHouses [Random.Range (0, m_main.allHouses.Count)].gameObject.transform.position;
+				}
+			}
+
+			if (Input.GetMouseButtonDown (1))
+			{
+				if (lookingForAlternate)
+				{
+					lookingForAlternate = false;
+					m_speed /= 2;
+				}
+				else
+				{	
+					alternateTarget = m_main.newPos;
+					lookingForAlternate = true;
+					m_speed *= 2;
+				}
 			}
 		}
 
