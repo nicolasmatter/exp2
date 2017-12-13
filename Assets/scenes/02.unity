@@ -177,6 +177,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &984900831
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.8596034
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -21.47121
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -8.57309
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705896906892172, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114834520350220812, guid: 3b24032e4981a427abf3d6cc7d3032fa,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1711877612}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3b24032e4981a427abf3d6cc7d3032fa, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1711877607
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +270,7 @@ MonoBehaviour:
   t_reset: 0
   q: 0
   q_reset: 0
+  constantSpeed: 0.001
 --- !u!81 &1711877610
 AudioListener:
   m_ObjectHideFlags: 0
@@ -279,7 +327,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1711877607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

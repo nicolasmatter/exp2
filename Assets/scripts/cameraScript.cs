@@ -14,11 +14,15 @@ public class cameraScript : MonoBehaviour {
 	public bool q_reset;
 	private Vector3 activeYDirection;
 
+	public float constantSpeed;
+	private bool userInput;
+
 	void Update()
 	{
 		if (Input.GetKey (KeyCode.A))
 		{
 			t_reset = false;
+			userInput = true;
 			t = Mathf.Clamp (t + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.down,t);
 		}	
@@ -26,6 +30,7 @@ public class cameraScript : MonoBehaviour {
 		if (Input.GetKey (KeyCode.D))
 		{
 			t_reset = false;
+			userInput = true;
 			t = Mathf.Clamp (t + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.up,t);
 		}	
@@ -53,12 +58,14 @@ public class cameraScript : MonoBehaviour {
 			{
 				t = 0;
 				t_reset = false;
+				userInput = false;
 			}
 		}
 
 		if (Input.GetKey (KeyCode.W))
 		{
 			q_reset = false;
+			userInput = true;
 			q = Mathf.Clamp (q + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.left,q);
 		}	
@@ -66,6 +73,7 @@ public class cameraScript : MonoBehaviour {
 		if (Input.GetKey (KeyCode.S))
 		{
 			q_reset = false;
+			userInput = true;
 			q = Mathf.Clamp (q + Time.deltaTime, 0, 2);
 			RotateAround (Vector3.right,q);
 		}	
@@ -92,8 +100,16 @@ public class cameraScript : MonoBehaviour {
 			{
 				q = 0;
 				q_reset = false;
+				userInput = false;
 			}
 		}
+
+		//Constant slow movement
+		if (!userInput)
+		{
+			RotateAround (Vector3.up,constantSpeed);
+		}
+			
 
 		distance = Mathf.Clamp (Vector3.Distance (transform.position, pivot.transform.position), 1f,100f)/10f;
 

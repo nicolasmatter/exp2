@@ -25,7 +25,7 @@ public class mainTwo : MonoBehaviour {
 	public int rbcTarget;
 	private bool isBuildingRandom;
 	public int randomPositionCount;
-	public List<Vector3> randomPositions = new List<Vector3>();
+	public List<TargetPoint> randomPositions = new List<TargetPoint>();
 	public Vector3 randomPositionsRange;
 
 	//Pause function
@@ -47,36 +47,44 @@ public class mainTwo : MonoBehaviour {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 
-		if (Input.GetKey (KeyCode.Period))
+		if (Input.GetKeyDown (KeyCode.Period))
 		{
 			randomPositionCount++;
+			if (randomPositions.Count < randomPositionCount)
+			{
+				CreateRandomPositions (randomPositions.Count);
+			}
 		}
-		if (Input.GetKey (KeyCode.Comma) && randomPositionCount > 0)
+		if (Input.GetKeyDown (KeyCode.Comma) && randomPositionCount > 0)
 		{
 			randomPositionCount--;
+//			if (randomPositions.Count > randomPositionCount)
+//			{
+//				randomPositions.RemoveAt (randomPositions.Count-1);
+//			}
 		}
 
-		if (Input.GetKey (KeyCode.Alpha1) && randomPositionsRange.x > 1)
+		if (Input.GetKeyDown (KeyCode.Alpha1) && randomPositionsRange.x > 1)
 		{
 			randomPositionsRange.x--;
 		}
-		if (Input.GetKey (KeyCode.Alpha2))
+		if (Input.GetKeyDown (KeyCode.Alpha2))
 		{
 			randomPositionsRange.x++;
 		}
-		if (Input.GetKey (KeyCode.Alpha3) && randomPositionsRange.y > 1)
+		if (Input.GetKeyDown (KeyCode.Alpha3) && randomPositionsRange.y > 1)
 		{
 			randomPositionsRange.y--;
 		}
-		if (Input.GetKey (KeyCode.Alpha4))
+		if (Input.GetKeyDown (KeyCode.Alpha4))
 		{
 			randomPositionsRange.y++;
 		}
-		if (Input.GetKey (KeyCode.Alpha5) && randomPositionsRange.z > 1)
+		if (Input.GetKeyDown (KeyCode.Alpha5) && randomPositionsRange.z > 1)
 		{
 			randomPositionsRange.z--;
 		}
-		if (Input.GetKey (KeyCode.Alpha6))
+		if (Input.GetKeyDown (KeyCode.Alpha6))
 		{
 			randomPositionsRange.z++;
 		}
@@ -102,7 +110,10 @@ public class mainTwo : MonoBehaviour {
 				{
 					for (int i = 0; i < randomPositionCount; i++)
 					{
-						randomPositions.Add (new Vector3 (Random.Range (-randomPositionsRange.x, randomPositionsRange.x), Random.Range (-randomPositionsRange.y, randomPositionsRange.y), Random.Range (-randomPositionsRange.z, randomPositionsRange.z)));
+						Vector3 newPosition=new Vector3 (Random.Range (-randomPositionsRange.x, randomPositionsRange.x),
+														Random.Range (-randomPositionsRange.y, randomPositionsRange.y), 
+														Random.Range (-randomPositionsRange.z, randomPositionsRange.z));
+						randomPositions.Add (new TargetPoint (i, newPosition));
 					}
 					StartCoroutine (BuildRandomly ());
 				}
@@ -149,7 +160,13 @@ public class mainTwo : MonoBehaviour {
 		}
 	}
 
-
+	private void CreateRandomPositions(int id)
+	{
+		Vector3 newPosition=new Vector3 (Random.Range (-randomPositionsRange.x, randomPositionsRange.x),
+			Random.Range (-randomPositionsRange.y, randomPositionsRange.y), 
+			Random.Range (-randomPositionsRange.z, randomPositionsRange.z));
+		randomPositions.Add (new TargetPoint (id, newPosition));
+	}
 
 	private IEnumerator BuildRandomly()
 	{
@@ -158,9 +175,8 @@ public class mainTwo : MonoBehaviour {
 		{
 			randomBuildCounter++;
 			GameObject spawn = Instantiate (m_carrier, transform.position, Quaternion.identity, gameObject.transform);
-			Vector3 position = randomPositions [Random.Range (0, randomPositions.Count)];
 			carrierTwo c_Two = spawn.GetComponent<carrierTwo> ();
-			c_Two.Setup (position,m_main);
+			c_Two.Setup (m_main);
 			objectCount++;
 			StartCoroutine (BuildRandomly ());
 		}
@@ -189,4 +205,17 @@ public class mainTwo : MonoBehaviour {
 		}
 	}
 
+}
+
+[System.Serializable]
+public class TargetPoint
+{
+	public int id;
+	public Vector3 position;
+
+	public TargetPoint(int c_id,Vector3 c_position)
+	{
+		id = c_id;
+		position = c_position;
+	}
 }

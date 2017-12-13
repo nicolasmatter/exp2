@@ -58,7 +58,7 @@ MonoBehaviour:
   p_Material: {fileID: 2100000, guid: 55078cd872c2642f29fa4b574a26d8a4, type: 2}
   newPos: {x: 0, y: 0, z: 0}
   rbcTarget: 400
-  randomPositionCount: 21
+  randomPositionCount: 8
   randomPositions: []
-  randomPositionsRange: {x: 15, y: 15, z: 5}
+  randomPositionsRange: {x: 6, y: 6, z: 6}
   isPaused: 0

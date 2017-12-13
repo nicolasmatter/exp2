@@ -271,7 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivot: {fileID: 2061574750}
-  angle: 1
+  angle: 5
+  distance: 0
+  t: 0
+  t_reset: 0
+  q: 0
+  q_reset: 0
 --- !u!45 &376165410
 Skybox:
   m_ObjectHideFlags: 0
@@ -313,6 +318,10 @@ MonoBehaviour:
   allHouses: []
   h_Material: {fileID: 2100000, guid: 899a6f8e4cb7f484189335da0041bdd5, type: 2}
   p_Material: {fileID: 2100000, guid: 55078cd872c2642f29fa4b574a26d8a4, type: 2}
+  newPos: {x: 0, y: 0, z: 0}
+  rbcTarget: 7120
+  randomPositionCount: 18
+  randomPositionsRange: {x: 15, y: 15, z: 5}
 --- !u!4 &1379520682
 Transform:
   m_ObjectHideFlags: 0
